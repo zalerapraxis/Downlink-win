@@ -11,6 +11,7 @@ Clone of http://downlinkapp.com for Windows - realtime satellite imagery as your
 ### TODO:
 
 - [ ] Settings loading/saving
+- [ ] Handle network errors gracefully
 - [ ] Multi-monitor support (different sources per display, ignore display)
 - [ ] Add more sources 
 - [ ] Add manual refresh
