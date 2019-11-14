@@ -42,8 +42,6 @@ namespace Downlink_win
             }
         }
 
-        public Source WallpaperSource { get; set; }
-
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

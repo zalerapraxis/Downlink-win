@@ -9,7 +9,7 @@ using Timer = System.Timers.Timer;
 
 namespace Downlink_win.Helpers
 {
-    class Scheduler
+    public class Scheduler
     {
         DownloadHelper _downloadHelper = new DownloadHelper();
         WallpaperHelper _wallpaperHelper = new WallpaperHelper();
@@ -25,23 +25,33 @@ namespace Downlink_win.Helpers
 
         public async Task RunScheduler()
         {
-            schedulerInterval = MainWindow._bindings.WallpaperSource.interval;
-
-            MainWindow._bindings.LastUpdated = $"Last updated {DateTime.Now}";
+            schedulerInterval = MainWindow._localSettings.WallpaperSource.interval;
 
             // download image, return its path, set as wallpaper and delete
-            var imagePath = await _downloadHelper.DownloadAndSaveImage(MainWindow._bindings.WallpaperSource.url.full);
-            _wallpaperHelper.SetWallpaper(imagePath);
-            _wallpaperHelper.DeleteImage(imagePath);
+            var imagePath = await _downloadHelper.DownloadAndSaveImage(MainWindow._localSettings.WallpaperSource.url.full);
 
-            StartTimers();
+            if (!imagePath.Any())
+            {
+                MainWindow._bindings.ProgramStatus = "Download failed. Retrying shortly...";
+                StartTimers(true);
+            }
+            else
+            {
+                _wallpaperHelper.SetWallpaper(imagePath);
+                _wallpaperHelper.DeleteImage(imagePath);
+
+                MainWindow._bindings.LastUpdated = $"Last updated {DateTime.Now}";
+
+                StartTimers(false);
+            }
+            
         }
 
-        private void StartTimers()
+        private void StartTimers(bool fastRetry)
         {
             schedulerTimer.Stop();
 
-            schedulerTimer.Interval = schedulerInterval * 1000;
+            schedulerTimer.Interval = (fastRetry ? 10 : schedulerInterval) * 1000;
             schedulerTimer.Start();
         }
 

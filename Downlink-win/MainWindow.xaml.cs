@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Downlink_win.Helpers;
+using Downlink_win.Models;
 using Application = System.Windows.Application;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 
@@ -18,8 +19,9 @@ namespace Downlink_win
     public partial class MainWindow : Window
     {
         public static Bindings _bindings = new Bindings();
-
-        Scheduler _scheduler = new Scheduler();
+        public static LocalSettings _localSettings = new LocalSettings();
+        public static SettingsHelper _settingsHelper = new SettingsHelper();
+        public static Scheduler _scheduler = new Scheduler();
 
         public Sources _imageSources = new Sources();
 
@@ -29,6 +31,8 @@ namespace Downlink_win
         {
             InitializeComponent();
             DataContext = _bindings;
+
+            _settingsHelper.LoadSettings();
 
             // populate listbox with source images & titles
             var listSources = new ObservableCollection<SourceDisplay>();
@@ -49,14 +53,9 @@ namespace Downlink_win
             var selectedItem = ((ListViewItem) sender).Content as SourceDisplay;
             Source selectedSource = _imageSources.sources.FirstOrDefault(x => x.name.Equals(selectedItem.name));
 
-            SelectSource(selectedSource);
+            _settingsHelper.SelectSource(selectedSource);
         }
 
-        public async void SelectSource(Source source)
-        {
-            _bindings.WallpaperSource = source;
-
-            await _scheduler.RunScheduler();
-        }
+        
     }
 }

@@ -26,9 +26,9 @@
             </ItemsControl.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <Image Source="{Binding image}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" />
-                        <TextBlock Text="{Binding name}" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+                    <StackPanel Orientation="Vertical">
+                        <Image Source="{Binding image}" Height="200" Stretch="UniformToFill" />
+                        <TextBlock Text="{Binding name}" HorizontalAlignment="Center" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -35,6 +35,7 @@ namespace Downlink_win
         {
             _notifyIcon.ContextMenuStrip =
                 new System.Windows.Forms.ContextMenuStrip();
+    
             _notifyIcon.ContextMenuStrip.Items.Add("Select source").Click += (s, e) => ShowMainWindow();
             _notifyIcon.ContextMenuStrip.Items.Add("Exit").Click += (s, e) => ExitApplication();
         }
@@ -45,6 +46,8 @@ namespace Downlink_win
             MainWindow.Close();
             _notifyIcon.Dispose();
             _notifyIcon = null;
+
+            Downlink_win.MainWindow._settingsHelper.SaveSettings();
         }
 
         private void ShowMainWindow()

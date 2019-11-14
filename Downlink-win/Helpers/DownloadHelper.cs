@@ -38,7 +38,8 @@ namespace Downlink_win
 
         private void Client_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
-            MainWindow._bindings.ProgramStatus = "";
+            if (e.Error == null)
+                MainWindow._bindings.ProgramStatus = "";
         }
     }
 }
