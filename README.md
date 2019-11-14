@@ -11,9 +11,9 @@ Clone of http://downlinkapp.com for Windows - realtime satellite imagery as your
 ### TODO:
 
 - [x] Settings loading/saving
-- [ ] Pause/Resume option
+- [x] Pause/Resume option
 - [x] Handle network errors gracefully
 - [ ] Add more sources 
-- [ ] Add manual refresh
+- [x] Add manual refresh
 - [ ] Allow user to determine refresh rate (currently uses image refresh rate of given source)
-- [ ] Option to keep images instead of deleting them
+- [x] Option to keep images instead of deleting them
