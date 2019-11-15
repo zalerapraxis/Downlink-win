@@ -21,26 +21,39 @@ namespace Downlink_win.Helpers
             await MainWindow._scheduler.RunScheduler();
         }
 
+        public void ToggleKeepImages(bool shouldKeepImages)
+        {
+            Properties.Settings.Default.KeepImages = shouldKeepImages;
+            MainWindow._localSettings.KeepImages = shouldKeepImages;
+        }
+
         public void LoadSettings()
         {
-            // don't try any of this if no settings were found
-            if (Properties.Settings.Default.WallpaperSource.Any() == false)
-                return;
-            
-            var savedSourceName = Properties.Settings.Default.WallpaperSource;
-            Source selectedSource = _imageSources.sources.FirstOrDefault(x => x.name.Equals(savedSourceName));
-
-            // should only be null if settings were externally modified or corrupted
-            // overwrite failure settings and cancel out
-            if (selectedSource == null)
+            // load wallpapersource settings, if they exist
+            if (Properties.Settings.Default.WallpaperSource.Any())
             {
-                Properties.Settings.Default.WallpaperSource = null;
-                SaveSettings();
-                return;
+                // find saved source from sources list
+                var savedSourceName = Properties.Settings.Default.WallpaperSource;
+                Source selectedSource = _imageSources.sources.FirstOrDefault(x => x.name.Equals(savedSourceName));
+
+                // should only be null if settings were externally modified or corrupted
+                // overwrite failure settings and cancel out
+                if (selectedSource == null)
+                {
+                    Properties.Settings.Default.WallpaperSource = null;
+                    SaveSettings();
+                    return;
+                }
+
+                // set source in local settings & use
+                MainWindow._localSettings.WallpaperSource = selectedSource;
+                SelectSource(selectedSource);
             }
-                
-            MainWindow._localSettings.WallpaperSource = selectedSource;
-            SelectSource(selectedSource);
+
+            // load keepimages settings, if they exist
+            if (Properties.Settings.Default.KeepImages)
+                MainWindow._localSettings.KeepImages = Properties.Settings.Default.KeepImages;
+            
         }
 
         public void SaveSettings()

@@ -24,5 +24,16 @@ namespace Downlink_win
         {
             File.Delete(path);
         }
+
+        public void MoveImage(string path)
+        {
+            var dirName = "Saved images";
+            var fileExtension = Path.GetExtension(path);
+            if (!Directory.Exists(dirName))
+            {
+                Directory.CreateDirectory(dirName);
+            }
+            File.Move(path, Path.Combine(dirName, $"{MainWindow._localSettings.WallpaperSource.name} - {DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss")}{fileExtension}"));
+        }
     }
 }

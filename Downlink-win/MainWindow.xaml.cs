@@ -32,8 +32,6 @@ namespace Downlink_win
             InitializeComponent();
             DataContext = _bindings;
 
-            _settingsHelper.LoadSettings();
-
             // populate listbox with source images & titles
             var listSources = new ObservableCollection<SourceDisplay>();
             foreach (var source in _imageSources.sources)

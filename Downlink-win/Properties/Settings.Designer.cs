@@ -34,5 +34,17 @@ namespace Downlink_win.Properties {
                 this["WallpaperSource"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool KeepImages {
+            get {
+                return ((bool)(this["KeepImages"]));
+            }
+            set {
+                this["KeepImages"] = value;
+            }
+        }
     }
 }

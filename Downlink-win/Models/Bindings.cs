@@ -15,6 +15,7 @@ namespace Downlink_win
 
         private string _programStatus;
         private string _lastUpdated;
+        private string _sourceName;
 
         public string ProgramStatus
         {

@@ -9,5 +9,6 @@ namespace Downlink_win.Models
     public class LocalSettings
     {
         public Source WallpaperSource { get; set; }
+        public bool KeepImages { get; set; }
     }
 }
