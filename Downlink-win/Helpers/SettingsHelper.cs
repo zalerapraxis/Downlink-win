@@ -18,6 +18,8 @@ namespace Downlink_win.Helpers
             Properties.Settings.Default.WallpaperSource = source.name;
             MainWindow._localSettings.WallpaperSource = source;
 
+            SaveSettings();
+
             await MainWindow._scheduler.RunScheduler();
         }
 
@@ -25,6 +27,7 @@ namespace Downlink_win.Helpers
         {
             Properties.Settings.Default.KeepImages = shouldKeepImages;
             MainWindow._localSettings.KeepImages = shouldKeepImages;
+            SaveSettings();
         }
 
         public void LoadSettings()
