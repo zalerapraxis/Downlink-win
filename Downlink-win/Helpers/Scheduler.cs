@@ -33,22 +33,30 @@ namespace Downlink_win.Helpers
             StartTimers(false);
 
             // download image, return its path, set as wallpaper and delete
-            var imagePath = await _downloadHelper.DownloadAndSaveImage(MainWindow._localSettings.WallpaperSource.url.full);
-
-            // process downloaded image
-            if (!imagePath.Any())
+            try
             {
-                MainWindow._bindings.ProgramStatus = "Download failed. Retrying shortly...";
-                StartTimers(true);
-            }
-            else
-            {
-                _wallpaperHelper.SetWallpaper(imagePath);
-
-                if (MainWindow._localSettings.KeepImages)
-                    _wallpaperHelper.MoveImage(imagePath);
+                var imagePath = await _downloadHelper.DownloadAndSaveImage(MainWindow._localSettings.WallpaperSource.url.full);
+                // process downloaded image
+                if (!imagePath.Any())
+                {
+                    MainWindow._bindings.ProgramStatus = "Download failed. Retrying shortly...";
+                    StartTimers(true);
+                }
                 else
-                    _wallpaperHelper.DeleteImage(imagePath);
+                {
+                    _wallpaperHelper.SetWallpaper(imagePath);
+
+                    if (MainWindow._localSettings.KeepImages)
+                        _wallpaperHelper.MoveImage(imagePath);
+                    else
+                        _wallpaperHelper.DeleteImage(imagePath);
+                }
+            }
+            catch(Exception ex)
+            {
+                // @TODO add a backoff or counter so this doesn't just retry indefinitly 
+                MainWindow._bindings.ProgramStatus = "Network issue. Retrying shortly...";
+                StartTimers(true);
             }
         }
 
